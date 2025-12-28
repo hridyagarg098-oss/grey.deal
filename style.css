@@ -721,3 +721,83 @@ body.dark .ai-reason {
 .share-btn:hover {
   transform: scale(1.2);
 }
+
+/* ===== MOBILE NAV ===== */
+.menu-toggle {
+  display: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  nav {
+    position: fixed;
+    top: 70px;
+    right: 0;
+    background: var(--card);
+    width: 220px;
+    height: 100vh;
+    flex-direction: column;
+    padding: 20px;
+    transform: translateX(100%);
+    transition: 0.4s ease;
+    z-index: 9999;
+  }
+
+  nav.active {
+    transform: translateX(0);
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+}
+
+/* ================= MOBILE RESPONSIVE ADDITIONS ================= */
+/* General mobile adjustments for better usability on small screens */
+@media (max-width: 768px) {
+  /* Navbar adjustments */
+  .navbar {
+    padding: 15px 20px;
+  }
+
+  .logo {
+    font-size: 20px;
+  }
+
+  /* Hero section */
+  .hero {
+    height: 70vh;
+    padding: 0 20px;
+    text-align: center;
+  }
+
+  .hero-text h1 {
+    font-size: 32px;
+  }
+
+  .search-box {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .search-box input {
+    width: 100%;
+    padding: 12px;
+  }
+
+  /* Sections */
+  .section {
+    padding: 40px 20px;
+  }
+
+  /* Property grid */
+  .property-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .property-card img {
+    height: 180px;
+  }
+}
