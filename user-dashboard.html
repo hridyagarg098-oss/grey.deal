@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard | Grey Deal</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+  <div class="logo">Grey<span>Deal</span></div>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="wishlist.html">Wishlist</a>
+    <a href="#" onclick="logout()">Logout</a>
+  </nav>
+</header>
+
+<section class="section">
+  <h2>Welcome, User 👋</h2>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <h3>Wishlist</h3>
+      <p>5</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>Contacted Brokers</h3>
+      <p>2</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>Viewed Properties</h3>
+      <p>12</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>Recent Activity</h2>
+
+  <ul class="leads-list">
+    <li>❤️ Saved Luxury Villa</li>
+    <li>📞 Contacted Rohit Sharma</li>
+    <li>🏠 Viewed Premium Flat</li>
+  </ul>
+</section>
+
+<script>
+function logout() {
+  localStorage.removeItem("role");
+  window.location.href = "index.html";
+}
+</script>
+
+</body>
+</html>

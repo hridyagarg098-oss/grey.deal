@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Property Details | Grey Deal</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+
+<body>
+
+<!-- PAGE TRANSITION -->
+<div class="page-transition" id="pageTransition"></div>
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="logo">Grey<span>Deal</span></div>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="wishlist.html">Wishlist</a>
+  </nav>
+
+  <div class="nav-right">
+    <div class="theme-toggle" id="themeToggle">
+      <span>☀️</span>
+      <span>🌙</span>
+    </div>
+  </div>
+</header>
+
+<!-- PROPERTY HERO -->
+<section class="property-hero">
+  <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994">
+  <div class="hero-overlay"></div>
+  <h1 class="property-title">Luxury Villa, Mumbai</h1>
+</section>
+
+<!-- PROPERTY INFO -->
+<section class="property-info">
+  <div>
+    <h2>₹ 2.4 Cr</h2>
+    <p>4 BHK • 3500 sqft • Sea View</p>
+    <p>Premium villa located in South Mumbai.</p>
+  </div>
+
+  <div>
+    <button class="btn-primary">Contact Broker</button>
+  </div>
+</section>
+
+<!-- GOOGLE MAP -->
+<section class="property-map">
+  <h2>Property Location</h2>
+
+  <div class="map-box">
+    <iframe
+      src="https://www.google.com/maps?q=19.0760,72.8777&z=14&output=embed"
+      width="100%"
+      height="100%"
+      style="border:0;"
+      loading="lazy">
+    </iframe>
+  </div>
+</section>
+
+<!-- EMI -->
+<section class="emi-section">
+  <h2>EMI Calculator</h2>
+
+  <div class="emi-card">
+    <input type="number" placeholder="Property Price">
+    <input type="number" placeholder="Down Payment">
+    <input type="number" placeholder="Interest Rate">
+    <button class="btn-primary">Calculate EMI</button>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="property-gallery">
+  <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c">
+  <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c">
+  <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be">
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>

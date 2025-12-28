@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Broker Dashboard | Grey Deal</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+</head>
+
+<body>
+
+<script>
+  // ROLE PROTECTION (SILENT)
+  if (localStorage.getItem("role") !== "broker") {
+    window.location.href = "index.html";
+  }
+</script>
+
+<div class="dashboard">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h2>Grey<span>Deal</span></h2>
+
+    <ul>
+      <li class="active">Dashboard</li>
+      <li>Add Property</li>
+      <li>My Properties</li>
+      <li>Leads</li>
+      <li onclick="logout()">Logout</li>
+    </ul>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="dashboard-main">
+
+    <!-- HEADER -->
+    <header class="dashboard-header">
+      <h1>Welcome, Rohit 👋</h1>
+
+      <div class="theme-toggle" id="themeToggle">
+        <span>☀️</span>
+        <span>🌙</span>
+      </div>
+    </header>
+
+    <!-- STATS -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <h3>Leads</h3>
+        <p>32</p>
+      </div>
+
+      <div class="stat-card">
+        <h3>Properties</h3>
+        <p>12</p>
+      </div>
+
+      <div class="stat-card">
+        <h3>Views</h3>
+        <p>4.2K</p>
+      </div>
+    </section>
+
+    <!-- ADD PROPERTY -->
+    <section class="dashboard-section">
+      <h2>Add New Property</h2>
+
+      <div class="add-property">
+        <input type="text" placeholder="Property Title">
+        <input type="text" placeholder="Location">
+        <input type="text" placeholder="Price">
+        <select>
+          <option>Property Type</option>
+          <option>Apartment</option>
+          <option>Villa</option>
+          <option>Plot</option>
+        </select>
+
+        <button class="btn-primary">Add Property</button>
+      </div>
+    </section>
+
+    <!-- MY PROPERTIES -->
+    <section class="dashboard-section">
+      <h2>My Properties</h2>
+
+      <!-- DESKTOP TABLE -->
+      <table class="property-table">
+        <tr>
+          <th>Title</th>
+          <th>Location</th>
+          <th>Price</th>
+          <th>Status</th>
+        </tr>
+
+        <tr>
+          <td>Luxury Villa</td>
+          <td>Mumbai</td>
+          <td>₹2.4 Cr</td>
+          <td>Active</td>
+        </tr>
+
+        <tr>
+          <td>Premium Flat</td>
+          <td>Delhi</td>
+          <td>₹85 L</td>
+          <td>Active</td>
+        </tr>
+      </table>
+
+      <!-- MOBILE CARDS -->
+      <div class="mobile-properties">
+        <div class="mobile-property-card">
+          <h4>Luxury Villa</h4>
+          <p>Mumbai • ₹2.4 Cr</p>
+        </div>
+
+        <div class="mobile-property-card">
+          <h4>Premium Flat</h4>
+          <p>Delhi • ₹85 L</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- LEADS -->
+    <section class="dashboard-section">
+      <h2>Recent Leads</h2>
+
+      <ul class="leads-list">
+        <li>Rahul – Interested in Luxury Villa</li>
+        <li>Ankit – Asked for site visit</li>
+        <li>Pooja – EMI details requested</li>
+      </ul>
+    </section>
+
+  </main>
+</div>
+
+<script src="dashboard.js"></script>
+
+<script>
+  function logout() {
+    localStorage.removeItem("role");
+    window.location.href = "index.html";
+  }
+</script>
+
+</body>
+</html>
