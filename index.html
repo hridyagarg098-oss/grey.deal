@@ -7,7 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="style.css" />
-  <!-- New Libraries for Features -->
+  <!-- External Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
@@ -54,13 +54,13 @@
 
   <!-- ================= HERO ================= -->
   <section class="hero">
-    <div id="particles-js"></div> <!-- Particle Background -->
+    <div id="particles-js"></div>
     <div class="hero-text">
       <h1>Great Deal with <span>Grey Deal</span></h1>
       <p>Buy & sell properties only with trusted and verified brokers.</p>
       <div class="search-box">
         <input type="text" id="searchInput" placeholder="Search properties..." aria-label="Search Properties">
-        <button onclick="startVoiceSearch()" class="voice-btn"><i class="fas fa-microphone"></i></button>
+        <button onclick="startVoiceSearch()" class="voice-btn" aria-label="Voice Search"><i class="fas fa-microphone"></i></button>
         <select aria-label="Location">
           <option>Location</option>
           <option>Mumbai</option>
@@ -75,6 +75,8 @@
         </select>
         <button class="btn-primary">Search</button>
       </div>
+      <!-- New: AI Quiz Button -->
+      <button class="btn-outline" onclick="startQuiz()" style="margin-top: 20px;">Take AI Matching Quiz</button>
     </div>
   </section>
 
@@ -117,11 +119,15 @@
   <section class="section">
     <h2>Featured Properties</h2>
     <div class="swipe-container">
-      <div class="property-grid" id="propertyGrid">
-        <!-- Dynamically loaded -->
-      </div>
+      <div class="property-grid" id="propertyGrid"></div>
     </div>
     <div class="pagination" id="pagination"></div>
+  </section>
+
+  <!-- ================= AUCTIONS SECTION (New) ================= -->
+  <section class="section auctions-section">
+    <h2>Live Property Auctions</h2>
+    <div class="auction-grid" id="auctionGrid"></div>
   </section>
 
   <!-- ================= AI RECOMMENDATIONS ================= -->
@@ -129,9 +135,7 @@
     <h2>🧠 AI Recommended For You <span class="ai-badge">AI</span></h2>
     <p class="ai-sub">Based on your interests, wishlist & viewed properties</p>
     <div class="swipe-container">
-      <div class="property-grid ai-grid" id="aiGrid">
-        <!-- Dynamically loaded -->
-      </div>
+      <div class="property-grid ai-grid" id="aiGrid"></div>
     </div>
   </section>
 
@@ -139,9 +143,7 @@
   <section class="section dark" id="brokers">
     <h2>Verified Brokers</h2>
     <div class="swipe-container">
-      <div class="broker-grid" id="brokerGrid">
-        <!-- Dynamically loaded -->
-      </div>
+      <div class="broker-grid" id="brokerGrid"></div>
     </div>
   </section>
 
@@ -172,6 +174,16 @@
     </div>
   </div>
 
+  <!-- ================= QUIZ MODAL (New) ================= -->
+  <div class="quiz-modal" id="quizModal" role="dialog" aria-labelledby="quizTitle">
+    <div class="quiz-box">
+      <h2 id="quizTitle">AI Property Matching Quiz</h2>
+      <div id="quizContent"></div>
+      <button class="btn-primary" id="quizNext" onclick="nextQuizQuestion()">Next</button>
+      <button class="btn-outline" onclick="closeQuiz()">Close</button>
+    </div>
+  </div>
+
   <!-- ================= COMPARE BAR ================= -->
   <div class="compare-bar" id="compareBar">
     <span id="compareCount">0</span> properties selected
@@ -198,4 +210,4 @@
   <script src="data.js"></script>
   <script src="script.js"></script>
 </body>
-</html>
+</html>  
