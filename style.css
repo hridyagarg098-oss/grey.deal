@@ -1084,4 +1084,122 @@ nav a:hover {
   transform: translateY(0);
 }
 
+/* ... (All previous CSS remains exact same) */
+
+/* ================= QUIZ MODAL (New) ================= */
+.quiz-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.quiz-box {
+  width: 400px;
+  padding: 30px;
+  border-radius: var(--border-radius);
+  background: var(--card);
+  backdrop-filter: blur(14px);
+  box-shadow: var(--shadow);
+  text-align: center;
+  animation: fadeInUp 0.5s ease;
+}
+
+.quiz-question {
+  margin: 20px 0;
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.quiz-options button {
+  padding: 10px;
+  border: 1px solid #ccc;
+  background: var(--secondary-bg);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.quiz-options button:hover {
+  background: var(--primary-gradient);
+  color: #fff;
+}
+
+/* ================= AUCTIONS SECTION (New) ================= */
+.auctions-section {
+  background: linear-gradient(135deg, #ffecd2, #fcb69f);
+}
+
+.auction-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.auction-card {
+  background: var(--card);
+  padding: 20px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  text-align: center;
+  transition: var(--transition);
+}
+
+.auction-card:hover {
+  transform: translateY(-10px);
+}
+
+.auction-timer {
+  font-size: 24px;
+  color: #ff4757;
+  font-weight: bold;
+}
+
+.auction-bid {
+  margin: 10px 0;
+}
+
+.auction-bid input {
+  width: 80px;
+  padding: 5px;
+  margin-right: 10px;
+}
+
+/* ================= SHARING MODAL (New) ================= */
+.share-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.share-box {
+  width: 300px;
+  padding: 20px;
+  border-radius: var(--border-radius);
+  background: var(--card);
+  text-align: center;
+}
+
+.share-link {
+  margin: 10px 0;
+  padding: 10px;
+  background: var(--secondary-bg);
+  border-radius: 8px;
+  word-break: break-all;
+}
+
+/* ... (Rest of previous CSS remains exact same) */
+
 body.dark .ai
