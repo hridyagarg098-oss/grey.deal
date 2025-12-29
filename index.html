@@ -4,38 +4,162 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Grey Deal | Great Deal with Grey Deal</title>
-
-  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
-<header class="navbar">
-  <div class="logo">Grey<span>Deal</span></div>
-
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="wishlist.html">Wishlist</a>
-  </nav>
-
-  <div class="theme-toggle" id="themeToggle">🌙</div>
-</header>
-
-<section class="hero">
-  <div class="hero-text">
-    <h1>Great Deal with <span>Grey Deal</span></h1>
-    <p>Buy & sell with verified brokers only</p>
+  <!-- PAGE TRANSITION OVERLAY -->
+  <div class="page-transition" id="pageTransition"></div>
+  <!-- ================= NAVBAR ================= -->
+  <header class="navbar">
+    <div class="logo">Grey<span>Deal</span></div>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    <nav id="navMenu">
+      <a href="index.html">Home</a>
+      <a href="#">Buy</a>
+      <a href="#">Rent</a>
+      <a href="#brokers">Brokers</a>
+      <a href="#contact">Contact</a>
+      <a href="wishlist.html">Wishlist</a>
+    </nav>
+    <div class="nav-right">
+      <div class="notification-icon" onclick="toggleNotifications()">
+        <i class="fas fa-bell"></i>
+        <span class="notif-badge" id="notifBadge">3</span>
+      </div>
+      <div class="theme-toggle" id="themeToggle">
+        <span>☀️</span>
+        <span>🌙</span>
+      </div>
+      <button class="btn-primary" onclick="openAuth()">Login</button>
+    </div>
+  </header>
+  <!-- NOTIFICATIONS PANEL -->
+  <div class="notifications-panel" id="notificationsPanel">
+    <h3>Notifications</h3>
+    <div class="notification-item unread">🏠 New property added in Mumbai</div>
+    <div class="notification-item unread">💰 Price dropped for Luxury Villa</div>
+    <div class="notification-item">📞 Broker Rohit contacted you</div>
   </div>
-</section>
-
-<section class="section">
-  <h2>Featured Properties</h2>
-  <div class="property-grid" id="propertyGrid"></div>
-</section>
-
-<footer>© 2025 Grey Deal</footer>
-
-<script src="data.js"></script>
-<script src="core.js"></script>
-<script src="index.js"></script>
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Great Deal with <span>Grey Deal</span></h1>
+      <p>Buy & sell properties only with trusted and verified brokers.</p>
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search properties...">
+        <select>
+          <option>Location</option>
+          <option>Delhi</option>
+          <option>Mumbai</option>
+          <option>Bangalore</option>
+        </select>
+        <select>
+          <option>Property Type</option>
+          <option>Apartment</option>
+          <option>Villa</option>
+          <option>Plot</option>
+        </select>
+        <button class="btn-primary">Search</button>
+      </div>
+    </div>
+  </section>
+  <!-- ================= FILTER BAR ================= -->
+  <section class="filter-section">
+    <div class="filter-bar">
+      <select id="filterLocation">
+        <option value="">Location</option>
+        <option value="Mumbai">Mumbai</option>
+        <option value="Delhi">Delhi</option>
+        <option value="Bangalore">Bangalore</option>
+      </select>
+      <select id="filterType">
+        <option value="">Property Type</option>
+        <option value="Villa">Villa</option>
+        <option value="Apartment">Apartment</option>
+        <option value="Plot">Plot</option>
+      </select>
+      <select id="filterBHK">
+        <option value="">BHK</option>
+        <option value="2">2 BHK</option>
+        <option value="3">3 BHK</option>
+        <option value="4">4 BHK</option>
+      </select>
+      <input type="range" id="minPrice" min="0" max="100000000" step="100000" placeholder="Min ₹">
+      <input type="range" id="maxPrice" min="0" max="100000000" step="100000" placeholder="Max ₹">
+      <button class="btn-primary" onclick="applyFilters()">Apply</button>
+      <button class="btn-outline" onclick="clearFilters()">Clear</button>
+    </div>
+  </section>
+  <!-- ================= PROPERTIES ================= -->
+  <section class="section">
+    <h2>Featured Properties</h2>
+    <div class="property-grid" id="propertyGrid">
+      <!-- Dynamically loaded -->
+    </div>
+    <div class="pagination" id="pagination"></div>
+  </section>
+  <!-- ================= AI RECOMMENDATIONS ================= -->
+  <section class="section ai-section">
+    <h2>🧠 AI Recommended For You <span class="ai-badge">AI</span></h2>
+    <p class="ai-sub">Based on your interests, wishlist & viewed properties</p>
+    <div class="property-grid ai-grid" id="aiGrid">
+      <!-- Dynamically loaded -->
+    </div>
+  </section>
+  <!-- ================= BROKERS ================= -->
+  <section class="section dark" id="brokers">
+    <h2>Verified Brokers</h2>
+    <div class="broker-grid" id="brokerGrid">
+      <!-- Dynamically loaded -->
+    </div>
+  </section>
+  <!-- ================= CONTACT ================= -->
+  <section class="section" id="contact">
+    <h2>Contact Grey Deal</h2>
+    <form class="contact-form" onsubmit="submitContact(event)">
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Email" required>
+      <textarea placeholder="Message" required></textarea>
+      <button class="btn-primary">Send Message</button>
+    </form>
+  </section>
+  <!-- ================= AUTH MODAL ================= -->
+  <div class="auth-modal" id="authModal">
+    <div class="auth-box">
+      <h2 id="authTitle">Login to Grey Deal</h2>
+      <input type="text" id="authInput" placeholder="Email or Phone">
+      <select id="roleSelect">
+        <option value="user">Login as User</option>
+        <option value="broker">Login as Broker</option>
+      </select>
+      <input type="text" id="otpInput" placeholder="Enter OTP" style="display:none;">
+      <button class="btn-primary" id="authAction">Send OTP</button>
+      <p class="switch-auth">Don’t have an account? <span onclick="switchAuth()">Sign up</span></p>
+      <button class="btn-outline" onclick="closeAuth()">Cancel</button>
+    </div>
+  </div>
+  <!-- ================= COMPARE BAR ================= -->
+  <div class="compare-bar" id="compareBar">
+    <span id="compareCount">0</span> properties selected
+    <button class="btn-primary" onclick="goToCompare()">Compare</button>
+  </div>
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <div class="footer-content">
+      <p>© 2025 Grey Deal • Great Deal with Grey Deal</p>
+      <div class="social-links">
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+  </footer>
+  <!-- ================= SCRIPTS ================= -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="data.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
