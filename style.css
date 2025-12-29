@@ -727,4 +727,142 @@ nav a:hover {
   font-weight: 500;
 }
 
+/* ================= MOBILE RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 10px 15px;
+    flex-wrap: wrap;
+  }
+  .navbar nav {
+    display: none; /* Hidden by default, shown via menu toggle */
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background: var(--card);
+    flex-direction: column;
+    padding: 20px;
+    box-shadow: var(--shadow);
+  }
+  .navbar nav.active {
+    display: flex;
+  }
+  .menu-toggle {
+    display: block;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  .hero {
+    height: 60vh;
+    padding: 0 15px;
+    text-align: center;
+  }
+  .hero-text h1 {
+    font-size: 28px;
+  }
+  .search-box {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .property-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  .property-card {
+    padding: 10px;
+  }
+  .broker-grid {
+    grid-template-columns: 1fr;
+  }
+  .dashboard {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    height: auto;
+    padding: 15px;
+  }
+  .dashboard-main {
+    padding: 15px;
+  }
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  .timeline {
+    padding-left: 20px;
+  }
+  .wishlist-preview {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+  .wishlist-item {
+    min-width: 250px;
+    scroll-snap-align: start;
+  }
+}
+
+/* ================= SWIPE ANIMATIONS ================= */
+.swipe-container {
+  overflow: hidden;
+  position: relative;
+}
+
+.swipe-item {
+  display: inline-block;
+  width: 100%;
+  transition: transform 0.3s ease;
+}
+
+.swipe-left {
+  transform: translateX(-100%);
+}
+
+.swipe-right {
+  transform: translateX(100%);
+}
+
+.swipe-dismiss {
+  animation: swipeOut 0.5s ease forwards;
+}
+
+@keyframes swipeOut {
+  to { transform: translateX(100%); opacity: 0; }
+}
+
+/* ================= MOBILE ANIMATIONS ================= */
+.mobile-parallax {
+  animation: mobileParallax 5s ease-in-out infinite;
+}
+
+@keyframes mobileParallax {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+.btn-primary:active {
+  transform: scale(0.95);
+  transition: transform 0.1s ease;
+}
+
+.loading-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Pull-to-refresh */
+.pull-refresh {
+  transform: translateY(-50px);
+  transition: transform 0.3s ease;
+}
+
+.pull-refresh.active {
+  transform: translateY(0);
+}
+
 body.dark .ai
