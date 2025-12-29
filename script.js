@@ -391,3 +391,83 @@ document.addEventListener("DOMContentLoaded", () => {
   renderAIRecommendations();
   updateCompareBar();
 });
+
+// ================= MOBILE SWIPES AND ANIMATIONS =================
+let hammer;
+
+// Initialize Hammer.js for swipes
+function initSwipes() {
+  hammer = new Hammer(document.body);
+
+  // Swipe to navigate properties
+  const propertyGrid = document.querySelector(".property-grid");
+  if (propertyGrid) {
+    const hammerProp = new Hammer(propertyGrid);
+    hammerProp.on('swipeleft', () => {
+      gsap.to(propertyGrid, { x: -window.innerWidth, duration: 0.5, onComplete: () => navigate('next-property') });
+    });
+    hammerProp.on('swiperight', () => {
+      gsap.to(propertyGrid, { x: window.innerWidth, duration: 0.5, onComplete: () => navigate('prev-property') });
+    });
+  }
+
+  // Swipe to dismiss notifications
+  hammer.on('swipeleft', (e) => {
+    if (e.target.closest('.notification-item')) {
+      e.target.closest('.notification-item').classList.add('swipe-dismiss');
+      setTimeout(() => e.target.closest('.notification-item').remove(), 500);
+    }
+  });
+
+  // Pull-to-refresh for dashboards
+  let startY;
+  hammer.on('panstart', (e) => { startY = e.deltaY; });
+  hammer.on('panend', (e) => {
+    if (e.deltaY > 100 && startY < 0) { // Pull down
+      document.querySelector('.dashboard-main').classList.add('pull-refresh');
+      setTimeout(() => {
+        location.reload(); // Simulate refresh
+      }, 1000);
+    }
+  });
+}
+
+// Mobile menu toggle
+function toggleMenu() {
+  const nav = document.querySelector('nav');
+  nav.classList.toggle('active');
+  gsap.from(nav, { opacity: 0, y: -20, duration: 0.3 });
+}
+
+// Enhanced GSAP for mobile
+if (window.innerWidth < 768) {
+  gsap.set(".property-card", { y: 50, opacity: 0 });
+  gsap.to(".property-card", { y: 0, opacity: 1, stagger: 0.1, duration: 0.5, ease: "power2.out" });
+}
+
+// Parallax on scroll (mobile-optimized)
+if (document.querySelector(".hero")) {
+  gsap.to(".hero", {
+    yPercent: -50,
+    ease: "none",
+    scrollTrigger: {
+      trigger: ".hero",
+      start: "top bottom",
+      end: "bottom top",
+      scrub: true
+    }
+  });
+}
+
+// Touch feedback
+document.addEventListener('touchstart', (e) => {
+  if (e.target.classList.contains('btn-primary')) {
+    console.log('Haptic feedback: button pressed'); // Simulate haptic
+  }
+});
+
+// Initialize on load
+document.addEventListener("DOMContentLoaded", () => {
+  initSwipes();
+  // ... existing init code ...
+});
