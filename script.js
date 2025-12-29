@@ -471,3 +471,76 @@ document.addEventListener("DOMContentLoaded", () => {
   initSwipes();
   // ... existing init code ...
 });
+
+// ... (All previous JS remains exact same) */
+
+// ================= QUIZ LOGIC (New) =================
+let quizStep = 0;
+const quizQuestions = [
+  { question: "What's your budget?", options: ["Under 50L", "50L-1Cr", "1Cr+"] },
+  { question: "Preferred location?", options: ["Mumbai", "Delhi", "Bangalore"] },
+  { question: "Property type?", options: ["Villa", "Apartment", "Plot"] }
+];
+let quizAnswers = [];
+
+function startQuiz() {
+  document.getElementById("quizModal").style.display = "flex";
+  gsap.from(".quiz-box", { scale: 0.7, opacity: 0, duration: 0.5 });
+  renderQuizQuestion();
+}
+
+function renderQuizQuestion() {
+  const content = document.getElementById("quizContent");
+  if (quizStep < quizQuestions.length) {
+    const q = quizQuestions[quizStep];
+    content.innerHTML = `
+      <div class="quiz-question">${q.question}</div>
+      <div class="quiz-options">${q.options.map(opt => `<button onclick="selectQuizOption('${opt}')">${opt}</button>`).join("")}</div>
+    `;
+  } else {
+    showQuizResults();
+  }
+}
+
+function selectQuizOption(option) {
+  quizAnswers.push(option);
+  quizStep++;
+  renderQuizQuestion();
+}
+
+function nextQuizQuestion() {
+  quizStep++;
+  renderQuizQuestion();
+}
+
+function showQuizResults() {
+  const recommendations = properties.filter(p =>
+    (quizAnswers[0] === "Under 50L" ? parseInt(p.price.replace(/[^\d]/g, "")) < 5000000 : true) &&
+    (p.location === quizAnswers[1]) &&
+    (p.type === quizAnswers[2])
+  );
+  document.getElementById("quizContent").innerHTML = `
+    <h3>Recommended Properties:</h3>
+    ${recommendations.slice(0, 3).map(p => `<p>${p.title} - ${p.price}</p>`).join("")}
+  `;
+  gsap.from("#quizContent h3", { y: 20, opacity: 0, duration: 0.5 });
+}
+
+function closeQuiz() {
+  document.getElementById("quizModal").style.display = "none";
+  quizStep = 0;
+  quizAnswers = [];
+}
+
+// ================= AUCTION LOGIC (New) =================
+let auctions = [
+  { id: 1, title: "Luxury Villa Auction", currentBid: 24000000, endTime: Date.now() + 3600000, image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994" }
+];
+
+function renderAuctions() {
+  const grid = document.getElementById("auctionGrid");
+  grid.innerHTML = auctions.map(a => `
+    <div class="auction-card">
+      <img src="${a.image}" alt="${a.title}" loading="lazy">
+      <h3>${a.title}</h3>
+      <p>Current Bid: ₹${a.currentBid.toLocaleString()}</
