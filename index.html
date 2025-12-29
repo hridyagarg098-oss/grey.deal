@@ -2,15 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Grey Deal | Great Deal with Grey Deal</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="style.css" />
+  <!-- External Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <!-- PAGE TRANSITION OVERLAY -->
   <div class="page-transition" id="pageTransition"></div>
+
   <!-- ================= NAVBAR ================= -->
   <header class="navbar">
     <div class="logo">Grey<span>Deal</span></div>
@@ -24,38 +30,40 @@
       <a href="wishlist.html">Wishlist</a>
     </nav>
     <div class="nav-right">
-      <div class="notification-icon" onclick="toggleNotifications()">
+      <div class="notification-icon" onclick="toggleNotifications()" aria-label="Notifications">
         <i class="fas fa-bell"></i>
         <span class="notif-badge" id="notifBadge">3</span>
       </div>
-      <div class="theme-toggle" id="themeToggle">
+      <div class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">
         <span>☀️</span>
         <span>🌙</span>
       </div>
       <button class="btn-primary" onclick="openAuth()">Login</button>
     </div>
   </header>
+
   <!-- NOTIFICATIONS PANEL -->
-  <div class="notifications-panel" id="notificationsPanel">
-    <h3>Notifications</h3>
+  <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-labelledby="notifTitle">
+    <h3 id="notifTitle">Notifications</h3>
     <div class="notification-item unread">🏠 New property added in Mumbai</div>
     <div class="notification-item unread">💰 Price dropped for Luxury Villa</div>
     <div class="notification-item">📞 Broker Rohit contacted you</div>
   </div>
+
   <!-- ================= HERO ================= -->
   <section class="hero">
     <div class="hero-text">
       <h1>Great Deal with <span>Grey Deal</span></h1>
       <p>Buy & sell properties only with trusted and verified brokers.</p>
       <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Search properties...">
-        <select>
+        <input type="text" id="searchInput" placeholder="Search properties..." aria-label="Search Properties">
+        <select aria-label="Location">
           <option>Location</option>
-          <option>Delhi</option>
           <option>Mumbai</option>
+          <option>Delhi</option>
           <option>Bangalore</option>
         </select>
-        <select>
+        <select aria-label="Property Type">
           <option>Property Type</option>
           <option>Apartment</option>
           <option>Villa</option>
@@ -65,100 +73,120 @@
       </div>
     </div>
   </section>
+
   <!-- ================= FILTER BAR ================= -->
   <section class="filter-section">
     <div class="filter-bar">
-      <select id="filterLocation">
+      <select id="filterLocation" aria-label="Filter by Location">
         <option value="">Location</option>
         <option value="Mumbai">Mumbai</option>
         <option value="Delhi">Delhi</option>
         <option value="Bangalore">Bangalore</option>
       </select>
-      <select id="filterType">
+      <select id="filterType" aria-label="Filter by Type">
         <option value="">Property Type</option>
         <option value="Villa">Villa</option>
         <option value="Apartment">Apartment</option>
         <option value="Plot">Plot</option>
       </select>
-      <select id="filterBHK">
+      <select id="filterBHK" aria-label="Filter by BHK">
         <option value="">BHK</option>
         <option value="2">2 BHK</option>
         <option value="3">3 BHK</option>
         <option value="4">4 BHK</option>
       </select>
-      <input type="range" id="minPrice" min="0" max="100000000" step="100000" placeholder="Min ₹">
-      <input type="range" id="maxPrice" min="0" max="100000000" step="100000" placeholder="Max ₹">
+      <input type="range" id="minPrice" min="0" max="100000000" step="100000" aria-label="Min Price">
+      <input type="range" id="maxPrice" min="0" max="100000000" step="100000" aria-label="Max Price">
+      <select id="sortBy" aria-label="Sort By">
+        <option value="">Sort By</option>
+        <option value="price-low">Price: Low to High</option>
+        <option value="price-high">Price: High to Low</option>
+        <option value="rating">Rating</option>
+        <option value="newest">Newest</option>
+      </select>
       <button class="btn-primary" onclick="applyFilters()">Apply</button>
       <button class="btn-outline" onclick="clearFilters()">Clear</button>
     </div>
   </section>
+
   <!-- ================= PROPERTIES ================= -->
   <section class="section">
     <h2>Featured Properties</h2>
-    <div class="property-grid" id="propertyGrid">
-      <!-- Dynamically loaded -->
+    <div class="swipe-container">
+      <div class="property-grid" id="propertyGrid">
+        <!-- Dynamically loaded via Script.js -->
+      </div>
     </div>
     <div class="pagination" id="pagination"></div>
   </section>
+
   <!-- ================= AI RECOMMENDATIONS ================= -->
   <section class="section ai-section">
     <h2>🧠 AI Recommended For You <span class="ai-badge">AI</span></h2>
     <p class="ai-sub">Based on your interests, wishlist & viewed properties</p>
-    <div class="property-grid ai-grid" id="aiGrid">
-      <!-- Dynamically loaded -->
+    <div class="swipe-container">
+      <div class="property-grid ai-grid" id="aiGrid">
+        <!-- Dynamically loaded via Script.js -->
+      </div>
     </div>
   </section>
+
   <!-- ================= BROKERS ================= -->
   <section class="section dark" id="brokers">
     <h2>Verified Brokers</h2>
-    <div class="broker-grid" id="brokerGrid">
-      <!-- Dynamically loaded -->
+    <div class="swipe-container">
+      <div class="broker-grid" id="brokerGrid">
+        <!-- Dynamically loaded via Script.js -->
+      </div>
     </div>
   </section>
+
   <!-- ================= CONTACT ================= -->
   <section class="section" id="contact">
     <h2>Contact Grey Deal</h2>
     <form class="contact-form" onsubmit="submitContact(event)">
-      <input type="text" placeholder="Your Name" required>
-      <input type="email" placeholder="Email" required>
-      <textarea placeholder="Message" required></textarea>
+      <input type="text" placeholder="Your Name" required aria-label="Name">
+      <input type="email" placeholder="Email" required aria-label="Email">
+      <textarea placeholder="Message" required aria-label="Message"></textarea>
       <button class="btn-primary">Send Message</button>
     </form>
   </section>
+
   <!-- ================= AUTH MODAL ================= -->
-  <div class="auth-modal" id="authModal">
+  <div class="auth-modal" id="authModal" role="dialog" aria-labelledby="authTitle">
     <div class="auth-box">
       <h2 id="authTitle">Login to Grey Deal</h2>
-      <input type="text" id="authInput" placeholder="Email or Phone">
-      <select id="roleSelect">
+      <input type="text" id="authInput" placeholder="Email or Phone" aria-label="Email or Phone">
+      <select id="roleSelect" aria-label="Role">
         <option value="user">Login as User</option>
         <option value="broker">Login as Broker</option>
       </select>
-      <input type="text" id="otpInput" placeholder="Enter OTP" style="display:none;">
+      <input type="text" id="otpInput" placeholder="Enter OTP" style="display:none;" aria-label="OTP">
       <button class="btn-primary" id="authAction">Send OTP</button>
       <p class="switch-auth">Don’t have an account? <span onclick="switchAuth()">Sign up</span></p>
       <button class="btn-outline" onclick="closeAuth()">Cancel</button>
     </div>
   </div>
+
   <!-- ================= COMPARE BAR ================= -->
   <div class="compare-bar" id="compareBar">
     <span id="compareCount">0</span> properties selected
     <button class="btn-primary" onclick="goToCompare()">Compare</button>
   </div>
+
   <!-- ================= FOOTER ================= -->
   <footer>
     <div class="footer-content">
       <p>© 2025 Grey Deal • Great Deal with Grey Deal</p>
       <div class="social-links">
-        <a href="#"><i class="fab fa-facebook"></i></a>
-        <a href="#"><i class="fab fa-twitter"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
       </div>
     </div>
   </footer>
+
   <!-- ================= SCRIPTS ================= -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="data.js"></script>
   <script src="script.js"></script>
 </body>
