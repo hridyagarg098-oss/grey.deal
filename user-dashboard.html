@@ -1,62 +1,239 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>User Dashboard | Grey Deal</title>
-
-  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-
 <body>
+  <!-- PAGE TRANSITION OVERLAY -->
+  <div class="page-transition" id="pageTransition"></div>
 
-<header class="navbar">
-  <div class="logo">Grey<span>Deal</span></div>
-
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="wishlist.html">Wishlist</a>
-    <a href="#" onclick="logout()">Logout</a>
-  </nav>
-</header>
-
-<section class="section">
-  <h2>Welcome, User 👋</h2>
-
-  <div class="stats-grid">
-    <div class="stat-card">
-      <h3>Wishlist</h3>
-      <p>5</p>
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="logo">Grey<span>Deal</span></div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="wishlist.html">Wishlist</a>
+      <a href="#" onclick="logout()">Logout</a>
+    </nav>
+    <div class="nav-right">
+      <div class="notification-icon" onclick="toggleNotifications()">
+        <i class="fas fa-bell"></i>
+        <span class="notif-badge" id="notifBadge">3</span>
+      </div>
+      <div class="theme-toggle" id="themeToggle">
+        <span>☀️</span>
+        <span>🌙</span>
+      </div>
     </div>
+  </header>
 
-    <div class="stat-card">
-      <h3>Contacted Brokers</h3>
-      <p>2</p>
-    </div>
-
-    <div class="stat-card">
-      <h3>Viewed Properties</h3>
-      <p>12</p>
-    </div>
+  <!-- NOTIFICATIONS PANEL -->
+  <div class="notifications-panel" id="notificationsPanel">
+    <h3>Notifications</h3>
+    <div class="notification-item unread">🏠 New property added in Mumbai</div>
+    <div class="notification-item unread">💰 Price dropped for Luxury Villa</div>
+    <div class="notification-item">📞 Broker Rohit contacted you</div>
   </div>
-</section>
 
-<section class="section">
-  <h2>Recent Activity</h2>
+  <!-- DASHBOARD CONTAINER -->
+  <div class="dashboard">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <h2>Grey<span>Deal</span></h2>
+      <ul>
+        <li class="active" onclick="showSection('overview')">Dashboard</li>
+        <li onclick="showSection('wishlist')">Wishlist</li>
+        <li onclick="showSection('profile')">Profile</li>
+        <li onclick="showSection('settings')">Settings</li>
+      </ul>
+    </aside>
 
-  <ul class="leads-list">
-    <li>❤️ Saved Luxury Villa</li>
-    <li>📞 Contacted Rohit Sharma</li>
-    <li>🏠 Viewed Premium Flat</li>
-  </ul>
-</section>
+    <!-- MAIN CONTENT -->
+    <main class="dashboard-main">
+      <!-- OVERVIEW SECTION -->
+      <section id="overview" class="section active">
+        <h1>Welcome back, User 👋</h1>
 
-<script>
-function logout() {
-  localStorage.removeItem("role");
-  window.location.href = "index.html";
-}
-</script>
+        <!-- STATS GRID -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <h3>Wishlist Items</h3>
+            <p id="wishlistCount">5</p>
+            <canvas id="wishlistChart" width="100" height="50"></canvas>
+          </div>
+          <div class="stat-card">
+            <h3>Contacted Brokers</h3>
+            <p id="brokersCount">2</p>
+            <canvas id="brokersChart" width="100" height="50"></canvas>
+          </div>
+          <div class="stat-card">
+            <h3>Properties Viewed</h3>
+            <p id="viewsCount">12</p>
+            <canvas id="viewsChart" width="100" height="50"></canvas>
+          </div>
+        </div>
 
+        <!-- ACTIVITY TIMELINE -->
+        <section class="activity-section">
+          <h2>Recent Activity</h2>
+          <div class="timeline">
+            <div class="timeline-item">
+              <i class="fas fa-heart"></i>
+              <div>
+                <p>Saved Luxury Villa to wishlist</p>
+                <span>2 hours ago</span>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <i class="fas fa-phone"></i>
+              <div>
+                <p>Contacted Rohit Sharma</p>
+                <span>1 day ago</span>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <i class="fas fa-eye"></i>
+              <div>
+                <p>Viewed Premium Flat</p>
+                <span>3 days ago</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- QUICK ACTIONS -->
+        <section class="quick-actions">
+          <h2>Quick Actions</h2>
+          <button class="btn-primary" onclick="navigate('index.html')">Search Properties</button>
+          <button class="btn-outline" onclick="openAuth()">Contact Broker</button>
+        </section>
+      </section>
+
+      <!-- WISHLIST SECTION -->
+      <section id="wishlist" class="section">
+        <h2>My Wishlist</h2>
+        <div class="wishlist-preview" id="wishlistPreview">
+          <!-- Dynamically loaded -->
+        </div>
+        <button class="btn-primary" onclick="navigate('wishlist.html')">View Full Wishlist</button>
+      </section>
+
+      <!-- PROFILE SECTION -->
+      <section id="profile" class="section">
+        <h2>Profile Management</h2>
+        <form class="profile-form" onsubmit="saveProfile(event)">
+          <input type="text" id="userName" placeholder="Full Name" value="John Doe">
+          <input type="email" id="userEmail" placeholder="Email" value="john@example.com">
+          <select id="userLocation">
+            <option>Preferred Location</option>
+            <option>Mumbai</option>
+            <option>Delhi</option>
+          </select>
+          <button class="btn-primary">Save Changes</button>
+        </form>
+      </section>
+
+      <!-- SETTINGS SECTION -->
+      <section id="settings" class="section">
+        <h2>Settings</h2>
+        <div class="settings-options">
+          <label>
+            <input type="checkbox" id="emailNotifs"> Email Notifications
+          </label>
+          <label>
+            <input type="checkbox" id="pushNotifs" checked> Push Notifications
+          </label>
+          <button class="btn-outline" onclick="logout()">Logout</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+  <script>
+    // Dashboard-specific logic
+    let userProfile = JSON.parse(localStorage.getItem("userProfile")) || { name: "User", email: "", location: "" };
+
+    // Initialize theme and profile
+    initTheme();
+    document.getElementById("userName").value = userProfile.name;
+    document.getElementById("userEmail").value = userProfile.email;
+    document.getElementById("userLocation").value = userProfile.location;
+
+    // Show sections
+    function showSection(sectionId) {
+      document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+      document.getElementById(sectionId).classList.add("active");
+      gsap.from(`#${sectionId}`, { opacity: 0, y: 20, duration: 0.5 });
+    }
+
+    // Render wishlist preview
+    function renderWishlistPreview() {
+      const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+      const preview = document.getElementById("wishlistPreview");
+      preview.innerHTML = wishlist.slice(0, 3).map(item => `
+        <div class="wishlist-item">
+          <img src="${item.image}" alt="${item.title}">
+          <h4>${item.title}</h4>
+          <p>${item.price}</p>
+          <button onclick="removeFromWishlist('${item.id}')">Remove</button>
+        </div>
+      `).join("");
+      document.getElementById("wishlistCount").innerText = wishlist.length;
+    }
+
+    function removeFromWishlist(id) {
+      let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+      wishlist = wishlist.filter(w => w.id !== id);
+      localStorage.setItem("wishlist", JSON.stringify(wishlist));
+      renderWishlistPreview();
+      showToast("Removed from wishlist", "success");
+    }
+
+    // Save profile
+    function saveProfile(event) {
+      event.preventDefault();
+      userProfile.name = document.getElementById("userName").value;
+      userProfile.email = document.getElementById("userEmail").value;
+      userProfile.location = document.getElementById("userLocation").value;
+      localStorage.setItem("userProfile", JSON.stringify(userProfile));
+      showToast("Profile updated!", "success");
+    }
+
+    // Charts
+    function renderCharts() {
+      // Wishlist Chart
+      new Chart(document.getElementById("wishlistChart"), {
+        type: "doughnut",
+        data: { labels: ["Saved", "Remaining"], datasets: [{ data: [5, 10] }] }
+      });
+      // Brokers Chart
+      new Chart(document.getElementById("brokersChart"), {
+        type: "bar",
+        data: { labels: ["Contacted"], datasets: [{ data: [2] }] }
+      });
+      // Views Chart
+      new Chart(document.getElementById("viewsChart"), {
+        type: "line",
+        data: { labels: ["Week 1", "Week 2"], datasets: [{ data: [5, 12] }] }
+      });
+    }
+
+    // Initialize
+    document.addEventListener("DOMContentLoaded", () => {
+      renderWishlistPreview();
+      renderCharts();
+      gsap.from(".stat-card", { y: 40, opacity: 0, stagger: 0.2, duration: 0.8 });
+    });
+  </script>
 </body>
 </html>
