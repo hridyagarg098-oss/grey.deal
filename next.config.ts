@@ -18,18 +18,18 @@ const nextConfig: NextConfig = {
   // This fixes Chrome serving cached pages from the old Express/static app.
   async redirects() {
     return [
-      { source: "/index.html",       destination: "/",            permanent: true },
-      { source: "/concierge.html",   destination: "/concierge",   permanent: true },
+      { source: "/index.html", destination: "/", permanent: true },
+      { source: "/concierge.html", destination: "/concierge", permanent: true },
       { source: "/collections.html", destination: "/collections", permanent: true },
-      { source: "/map.html",         destination: "/map",         permanent: true },
-      { source: "/invest.html",      destination: "/invest",      permanent: true },
-      { source: "/profile.html",     destination: "/profile",     permanent: true },
-      { source: "/wishlist.html",    destination: "/wishlist",    permanent: true },
-      { source: "/premium.html",     destination: "/premium",     permanent: true },
-      { source: "/signin.html",      destination: "/auth/signin", permanent: true },
-      { source: "/signup.html",      destination: "/auth/signup", permanent: true },
+      { source: "/map.html", destination: "/map", permanent: true },
+      { source: "/invest.html", destination: "/invest", permanent: true },
+      { source: "/profile.html", destination: "/profile", permanent: true },
+      { source: "/wishlist.html", destination: "/wishlist", permanent: true },
+      { source: "/premium.html", destination: "/premium", permanent: true },
+      { source: "/signin.html", destination: "/auth/signin", permanent: true },
+      { source: "/signup.html", destination: "/auth/signup", permanent: true },
       // Catch-all: any other .html → strip extension
-      { source: "/:page.html",       destination: "/:page",       permanent: true },
+      { source: "/:page.html", destination: "/:page", permanent: true },
     ];
   },
 

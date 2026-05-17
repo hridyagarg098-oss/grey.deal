@@ -85,8 +85,6 @@ export function calculateTotalROI(params: {
     holdingYears = 5,
   } = params;
 
-  const nry = calculateNRY(priceRs, monthlyRentRs, sqft, city) / 100;
-
   // Rental income with 5% annual escalation
   let rentalIncome = 0;
   let annualRent = monthlyRentRs * 12 * (1 - 0.09); // net of vacancy
